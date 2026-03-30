@@ -18,7 +18,8 @@ import lombok.Setter;
 
 
 public class Curso {
-      @Id
+  
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idCurso;
 
