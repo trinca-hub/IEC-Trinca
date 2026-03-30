@@ -29,10 +29,18 @@ public class AlunoController {
         return "redirect:/alunos/listar";
     }
 
-
+    // Método para listar todos os alunos
     @GetMapping("/listar")
     public String listar(Model model) {
         model.addAttribute("alunos", alunoService.findAll());
-        return "aluno/listaAlunos";
+        return "aluno/listarAlunos";
     }
+
+    // Método para criar um novo aluno e abrir o formulário
+    @GetMapping("/criar")
+    public String criarForm(Model model) {
+    model.addAttribute("aluno",new Aluno());
+    return "aluno/index";
+    }
+ 
 }
