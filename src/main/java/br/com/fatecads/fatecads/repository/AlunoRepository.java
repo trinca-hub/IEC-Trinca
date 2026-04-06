@@ -6,8 +6,4 @@ import br.com.fatecads.fatecads.entity.Aluno;
 
 public interface AlunoRepository extends JpaRepository<Aluno, Integer> {
 
-    Aluno save(Aluno aluno);
-    
-
-
 }

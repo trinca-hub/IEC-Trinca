@@ -12,11 +12,11 @@
     </h3>
     <table align="center" border="1">
      <tr>
-        <th>Nome
+        <th>Nome</th>
         <th>E-mail</th>
         <th>Endereço</th>
         <th>Telefone</th>
-        <th>CPF</tr>
+        <th>CPF</th>
         <th>RA</th>
         <th colspan="2">Ações</th>
     </tr>
@@ -29,9 +29,8 @@
         <td th:text="${aluno.raAluno}">*</td>
         <td>
             <a th:href="@{/alunos/editar/{id}(id=${aluno.idAluno})}">Editar</a>
-            <a th:href="@{/alunos/Excluir/{id}(id=${aluno.idAluno})}">Excluir</a>
+            <a th:href="@{/alunos/excluir/{id}(id=${aluno.idAluno})}">Excluir</a>
         </td>
-
     </tr>
     </table>
 </body>
