@@ -29,7 +29,7 @@ public class Curso {
     @Column(length = 100)
     private String periodoCurso;
 
-    @Column(nullable = false, length = 5)
+    @Column(nullable = false)
     private Integer carga_horariaCurso;
 
 
