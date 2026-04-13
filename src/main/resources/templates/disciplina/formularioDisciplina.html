@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Disciplinas</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+</head>
+<body>
+    <h1>Cadastro de Disciplinas</h1>
+    <form th:action="@{/disciplinas/salvar}" method="post" th:object="${disciplina}">
+
+        <input type="hidden" th:field="*{idDisciplina}">
+
+        <label>Nome:</label>
+        <input type="text" th:field="*{nomeDisciplina}">
+        <br />
+        <label>Sigla:</label>
+        <input type="text" th:field="*{siglaDisciplina}">
+        <br />
+        <label>Carga Horária:</label>
+        <input type="number" th:field="*{carga_horariaDisciplina}">
+        <br />
+
+        <input type="submit" value="Salvar">
+    </form>
+    <div class="page-actions">
+        <a class="btn-link secondary" href="/">Voltar à página inicial</a>
+    </div>
+</body>
+</html>

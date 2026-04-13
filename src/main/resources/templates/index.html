@@ -4,11 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema FatecADS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
 </head>
 <body>
-    <h1 style="text-align: center;">Bem Vindo ao Sistema FatecADS</h1>
-    <h3 style="text-align: center;"><a href="/alunos/listar">Gerenciar alunos</a></h3>
-    <h3 style="text-align: center;"><a href="/alunos/criar">Cadastar alunos</a></h3>
-    <h3 style="text-align: center;"><a href="/cursos/criar">Cadastar cursos</a></h3>
+    <div class="container">
+        <h1>Bem-vindo ao Sistema FatecADS</h1>
+        <p class="subtitle">Escolha um módulo para gerenciar os dados.</p>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h2>Alunos</h2>
+                <p>Cadastre, edite e exclua alunos.</p>
+                <a class="btn-link" href="/alunos/listar">Gerenciar alunos</a>
+            </div>
+
+            <div class="card">
+                <h2>Cursos</h2>
+                <p>Cadastre, edite e exclua cursos.</p>
+                <a class="btn-link" href="/cursos/listar">Gerenciar cursos</a>
+            </div>
+
+            <div class="card">
+                <h2>Disciplinas</h2>
+                <p>Cadastre, edite e exclua disciplinas.</p>
+                <a class="btn-link" href="/disciplinas/listar">Gerenciar disciplinas</a>
+            </div>
+
+            <div class="card">
+                <h2>Professores</h2>
+                <p>Cadastre, edite e exclua professores.</p>
+                <a class="btn-link" href="/professores/listar">Gerenciar professores</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Cursos</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
 </head>
 <body>
-    <h1 style="text-align: center;">Cadastro de Cursos</h1>
+    <h1>Cadastro de Cursos</h1>
     <form th:action="@{/cursos/salvar}" method="post" th:object="${curso}">
 
         <input type="hidden" th:field="*{idCurso}">
@@ -23,5 +24,8 @@
     
         <input type="submit" value="Salvar">
     </form>
+    <div class="page-actions">
+        <a class="btn-link secondary" href="/">Voltar à página inicial</a>
+    </div>
 </body>
 </html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Professores</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+</head>
+<body>
+    <h1>Lista de Professores</h1>
+    <div class="page-actions">
+        <a class="btn-link" href="/professores/criar">Criar novo professor</a>
+        <a class="btn-link secondary" href="/">Voltar à página inicial</a>
+    </div>
+    <table>
+     <tr>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th>Graduação</th>
+        <th>RM</th>
+        <th colspan="2">Ações</th>
+    </tr>
+    <tr th:each="professor : ${professores}">
+        <td th:text="${professor.nomeProfessor}">*</td>
+        <td th:text="${professor.telefoneProfessor}">*</td>
+        <td th:text="${professor.graduacaoProfessor}">*</td>
+        <td th:text="${professor.rmProfessor}">*</td>
+        <td>
+            <a th:href="@{/professores/editar/{id}(id=${professor.id})}">Editar</a>
+            <a th:href="@{/professores/excluir/{id}(id=${professor.id})}">Excluir</a>
+        </td>
+    </tr>
+    </table>
+</body>
+</html>
