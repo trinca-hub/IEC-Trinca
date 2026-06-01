@@ -15,10 +15,15 @@ public class SecurityConfig {
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
-                                
+                                .csrf(csrf -> csrf
+                                                .ignoringRequestMatchers(
+                                                                "/esqueci-senha",
+                                                                "/redefinir-senha"))
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers(
                                                                 "/login",
+                                                                "/esqueci-senha",
+                                                                "/redefinir-senha",
                                                                 "/fatecads",
                                                                 "/css/**",
                                                                 "/images/**",
