@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Produto</title>
+</head>
+<body>
+    <h1 style="text-align: center;">Lista de Produto</h1>
+    <h2 style="text-align: center;">
+        <a th:href="@{/produtos/criar}">Cadastrar Novo Produto</a>
+    </h2>
+    <table>
+            <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Unidade</th>
+                <th>Marca</th>
+                <th colspan="2">Ações</th>
+            </tr>
+            <tr th:each="produto : ${produtos}">
+                <td th:text="${produto.descricao}"></td>
+                <td th:text="${produto.valor}"></td>
+                <td th:text="${produto.unidade}"></td>
+                <td th:text="${produto.marca}"></td>
+                <td><a th:href="@{/produtos/{id}/editar(id=${produto.id})}">Editar</a></td>
+                <td><a th:href="@{/produtos/{id}/excluir(id=${produto.id})}" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a></td>
+            </tr>
+
+        <tbody>
+            <!-- Adicione aqui os dados dos produtos -->
+        </tbody>
+    </table>
+
+</body>
+</html>
