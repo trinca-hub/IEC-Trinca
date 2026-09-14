@@ -27,7 +27,7 @@ public class ProdutoController {
     public String listar(Model model) {
         List<Produto> produtos = produtoService.findAll();
         model.addAttribute("produtos", produtos);
-        return "produtos/listarProdutos";
+        return "produto/listarProdutos";
     }
 
     //Método para abrir o formulário de criação de produtos  
@@ -49,7 +49,7 @@ public class ProdutoController {
     public String editarForm(@PathVariable Integer id, Model model) {
         Produto produto = produtoService.findById(id);
         model.addAttribute("produto", produto);
-        return "produto/formulario";
+        return "produto/formularioProduto";
     }
 
     //Método para excluir um produto pelo ID
