@@ -11,19 +11,19 @@
         <input type="hidden" name="idProduto" th:field="*{idProduto}">
 
         <label for="descricaoProduto">Descrição do Produto</label>
-        <input type="text" id="descricaoProduto" name="descricaoProduto">
+        <input type="text" id="descricaoProduto" th:field="*{descricaoProduto}">
         <br /> <br>
 
         <label for="valorProduto">Valor do Produto</label>
-        <input type="text" id="valorProduto" name="valorProduto">
+        <input type="text" id="valorProduto" th:field="*{valorProduto}">
         <br /> <br>
 
         <label for="unidadeProduto">Unidade</label>
-        <input type="text" id="unidadeProduto" name="unidadeProduto">
+        <input type="text" id="unidadeProduto" th:field="*{unidadeProduto}">
         <br /> <br>
 
         <label for="marcaProduto">Marca do Produto</label>
-        <input type="text" id="marcaProduto" name="marcaProduto">
+        <input type="text" id="marcaProduto" th:field="*{marcaProduto}">
         <br /> <br>
 
         <input type="submit" value="Salvar Produto" />
