@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Usuários</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
 </head>
 <body>
-    <h1 style="text-align: center;">Cadastro de Usuários</h1>
+<div class="container">
+    <h1>Cadastro de Usuários</h1>
     <form th:action="@{/usuarios/salvar}" th:object="${usuario}" method="post">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <label for="nomeUsuario">Nome:</label>
@@ -21,7 +23,11 @@
         <label for="senhaUsuario">Senha:</label>
         <input type="password" id="senhaUsuario" name="senhaUsuario" th:field="*{senhaUsuario}" required>
         <br />
-        <button type="submit">Salvar</button>
+        <input type="submit" value="Salvar">
     </form>
+    <div class="page-actions">
+        <a class="btn-link secondary" href="/">Voltar à página inicial</a>
+    </div>
+</div>
 </body>
 </html>

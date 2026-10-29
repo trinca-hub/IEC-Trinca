@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Seu carrinho</h1>
+    <div class="page-actions">
+        <a class="btn-link secondary" href="/marketplace">Continuar comprando</a>
+    </div>
+
+    <p class="auth-message error" th:if="${erro}" th:text="${erro}"></p>
+    <div class="table-wrap" th:if="${!#lists.isEmpty(itens)}">
+        <table>
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Subtotal</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${itens}">
+                    <td th:text="${item.produto.descricaoProduto}">Produto</td>
+                    <td th:text="${item.quantidade}">1</td>
+                    <td th:text="${'R$ ' + #numbers.formatDecimal(item.subtotal, 1, 2)}">R$ 0,00</td>
+                    <td>
+                        <form method="post" th:action="@{/carrinho/remover}">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <input type="hidden" name="produtoId" th:value="${item.produto.idProduto}">
+                            <button class="btn-danger" type="submit">Remover</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="empty-state" th:if="${#lists.isEmpty(itens)}">
+        <h2>Seu carrinho está vazio</h2>
+        <a class="btn-link" href="/marketplace">Ver produtos</a>
+    </div>
+
+    <div class="pedido-total" th:if="${!#lists.isEmpty(itens)}">
+        <span>Total</span>
+        <strong th:text="${'R$ ' + #numbers.formatDecimal(total, 1, 2)}">R$ 0,00</strong>
+    </div>
+    <form th:if="${!#lists.isEmpty(itens)}" method="post" th:action="@{/checkout/confirmar}">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <button class="btn-primary pedido-save" type="submit">Finalizar pedido</button>
+    </form>
+</div>
+</body>
+</html>

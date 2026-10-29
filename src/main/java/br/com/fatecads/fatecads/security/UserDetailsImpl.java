@@ -17,10 +17,16 @@ public class UserDetailsImpl implements UserDetails {
     public UserDetailsImpl(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(usuario.getRole()));
+        String role = usuario.getRole() == null || usuario.getRole().isBlank()
+                ? "ROLE_USER" : usuario.getRole();
+        return List.of(new SimpleGrantedAuthority(role));
     }
  
     @Override

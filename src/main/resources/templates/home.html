@@ -7,9 +7,15 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Bem-vindo ao Sistema FatecADS</h1>
-        <p class="subtitle">Escolha um módulo para gerenciar os dados.</p>
+    <div class="container home-page">
+        <div class="home-header">
+            <div>
+                <p class="eyebrow">Painel administrativo</p>
+                <h1>FatecADS</h1>
+                <p class="subtitle">Escolha um módulo para gerenciar os dados.</p>
+            </div>
+            <a class="btn-link secondary" href="/marketplace">Ver marketplace</a>
+        </div>
 
         <div class="dashboard-grid">
             <div class="card">
@@ -46,6 +52,12 @@
                 <h2>Fazer Pedido</h2>
                 <p>Cadastre, edite e exclua pedidos.</p>
                 <a class="btn-link" href="/pedidos/cadastrar">Fazer pedido</a>
+            </div>
+
+            <div class="card">
+                <h2>Usuários</h2>
+                <p>Associe contas aos alunos para liberar compras.</p>
+                <a class="btn-link" href="/usuarios/gerenciar">Gerenciar usuários</a>
             </div>
 
         </div>

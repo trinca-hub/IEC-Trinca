@@ -4,31 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Produtos</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
 </head>
 <body>
-    <h1 style="text-align: center;">Cadastro de Produtos</h1>
-    <form th:action="@{/produtos/salvar}" method="post" th:object="${produto}">
+<div class="container">
+    <h1>Cadastro de Produtos</h1>
+    <p class="auth-message error" th:if="${erro}" th:text="${erro}"></p>
+    <form th:action="@{/produtos/salvar}" method="post" enctype="multipart/form-data" th:object="${produto}">
         <input type="hidden" name="idProduto" th:field="*{idProduto}">
 
         <label for="descricaoProduto">Descrição do Produto</label>
         <input type="text" id="descricaoProduto" th:field="*{descricaoProduto}">
-        <br /> <br>
+        <br />
 
         <label for="valorProduto">Valor do Produto</label>
         <input type="text" id="valorProduto" th:field="*{valorProduto}">
-        <br /> <br>
+        <br />
 
         <label for="unidadeProduto">Unidade</label>
         <input type="text" id="unidadeProduto" th:field="*{unidadeProduto}">
-        <br /> <br>
+        <br />
 
         <label for="marcaProduto">Marca do Produto</label>
         <input type="text" id="marcaProduto" th:field="*{marcaProduto}">
-        <br /> <br>
+        <br />
+
+        <label for="foto">Foto do Produto</label>
+        <input type="file" id="foto" name="foto" accept="image/*" th:attr="required=${produto.idProduto == null}">
+        <small th:if="${produto.idProduto != null}">Envie uma nova foto somente se quiser substituí-la.</small>
 
         <input type="submit" value="Salvar Produto" />
 
     </form>
-
+    <div class="page-actions">
+        <a class="btn-link secondary" href="/produtos/listar">Voltar para produtos</a>
+        <a class="btn-link secondary" href="/">Voltar à página inicial</a>
+    </div>
+</div>
 </body>
 </html>

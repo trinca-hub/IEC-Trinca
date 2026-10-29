@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.fatecads.fatecads.entity.Produto;
 import br.com.fatecads.fatecads.service.ProdutoService;
@@ -39,9 +44,29 @@ public class ProdutoController {
 
     //Método para salvar um produto
     @PostMapping("/salvar")
-    public String salvar(@ModelAttribute Produto produto) {
-        produtoService.save(produto);
+    public String salvar(@ModelAttribute Produto produto,
+            @RequestParam(value = "foto", required = false) MultipartFile foto, Model model) {
+        try {
+            produtoService.save(produto, foto);
+        } catch (IllegalArgumentException ex) {
+            model.addAttribute("erro", ex.getMessage());
+            return "produto/formularioProduto";
+        }
         return "redirect:/produtos/listar";
+    }
+
+    @GetMapping("/imagem/{id}")
+    public ResponseEntity<byte[]> imagem(@PathVariable Integer id) {
+        Produto produto = produtoService.findById(id);
+        if (produto == null || produto.getFotoProduto() == null) {
+            return ResponseEntity.notFound().build();
+        }
+        MediaType mediaType = MediaType.parseMediaType(
+                produto.getTipoFotoProduto() == null ? MediaType.APPLICATION_OCTET_STREAM_VALUE
+                        : produto.getTipoFotoProduto());
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, mediaType.toString())
+                .body(produto.getFotoProduto());
     }
 
     //Método para abrir o formulário de edição de produtos 

@@ -37,4 +37,8 @@ public class Usuario {
 
     private String role = "ROLE_USER";
 
+    @ManyToOne
+    @JoinColumn(name = "idAluno_fk")
+    private Aluno aluno;
+
 }

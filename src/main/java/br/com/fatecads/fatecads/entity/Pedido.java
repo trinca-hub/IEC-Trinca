@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.FetchType;
 
 
 @Entity
@@ -36,6 +37,10 @@ public class Pedido {
     @ManyToOne
     @JoinColumn(name = "idAluno_fk")
     private Aluno aluno;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idUsuario_fk")
+    private Usuario usuario;
 
     @OneToMany (mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<ItemDoPedido> itens;

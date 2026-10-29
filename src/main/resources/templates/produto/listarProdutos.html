@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Produto</title>
+    <title>Lista de Produtos</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
 </head>
 <body>
-    <h1 style="text-align: center;">Lista de Produto</h1>
-    <h2 style="text-align: center;">
-        <a th:href="@{/produtos/criar}">Cadastrar Novo Produto</a>
-    </h2>
+<div class="container">
+    <h1>Lista de Produtos</h1>
+    <div class="page-actions">
+        <a class="btn-link" th:href="@{/produtos/criar}">Cadastrar novo produto</a>
+        <a class="btn-link secondary" href="/">Voltar à página inicial</a>
+    </div>
+    <div class="table-wrap">
     <table>
         <thead>
             <tr>
+                <th>Foto</th>
                 <th>Descrição</th>
                 <th>Valor</th>
                 <th>Unidade</th>
@@ -23,6 +28,12 @@
 
         <tbody>
             <tr th:each="produto : ${produtos}">
+                <td>
+                    <img class="product-thumb" th:if="${produto.fotoProduto != null}"
+                         th:src="@{/produtos/imagem/{id}(id=${produto.idProduto})}"
+                         th:alt="${produto.descricaoProduto}">
+                    <span th:if="${produto.fotoProduto == null}">Sem foto</span>
+                </td>
                 <td th:text="${produto.descricaoProduto}"></td>
                 <td th:text="${produto.valorProduto}"></td>
                 <td th:text="${produto.unidadeProduto}"></td>
@@ -32,6 +43,7 @@
             </tr>
         </tbody>
     </table>
-
+    </div>
+</div>
 </body>
 </html>

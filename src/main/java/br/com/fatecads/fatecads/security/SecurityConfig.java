@@ -27,12 +27,22 @@ public class SecurityConfig {
                                                                 "/fatecads",
                                                                 "/css/**",
                                                                 "/images/**",
-                                                                "/usuarios/**")
+                                                                "/usuarios/criar",
+                                                                "/usuarios/salvar")
                                                 .permitAll()
+                                                        .requestMatchers("/marketplace", "/produtos/imagem/**", "/carrinho/**", "/checkout/**")
+                                                                .hasAnyRole("USER", "ADMIN")
+                                                        .requestMatchers("/home", "/alunos/**", "/cursos/**", "/disciplinas/**",
+                                                                "/professores/**", "/produtos/**", "/pedidos/**", "/usuarios/**")
+                                                                .hasRole("ADMIN")
                                                 .anyRequest().authenticated())
                                 .formLogin(form -> form
                                                 .loginPage("/login")
-                                                .defaultSuccessUrl("/home", true)
+                                        .successHandler((request, response, authentication) -> {
+                                                boolean admin = authentication.getAuthorities().stream()
+                                                        .anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()));
+                                                response.sendRedirect(admin ? "/home" : "/marketplace");
+                                        })
                                                 .permitAll())
                                 .logout(logout -> logout
                                                 .logoutSuccessUrl("/login?logout")

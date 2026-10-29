@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Pedidos</title>
+    <title>Cadastro de Pedidos</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+    <meta name="_csrf" th:content="${_csrf.token}">
 </head>
-<body>
-    <h1 style="text-align: center;">Formulario de Pedidos</h1>
+<body class="pedido-page">
+<div class="container">
+    <h1>Cadastro de Pedido</h1>
+    <div class="page-actions">
+        <a class="btn-link secondary" th:href="@{/home}">Voltar à página inicial</a>
+    </div>
+
+    <section class="card pedido-card">
+        <h2>Identificação do aluno</h2>
     <datalist id="listaAlunos">
         <option th:each="aluno : ${alunos}" th:value="${aluno.idAluno + ' - ' + aluno.nomeAluno}"></option>
     </datalist>
@@ -18,26 +27,29 @@
         </option>
     </datalist>
 
-    <h1>Cadastro de Pedido</h1>
-    <a th:href="@{/home}">Voltar</a>
-
-    <p>I. Identificação do Aluno</p>
     <label for="aluno">Aluno:</label>
-    <br />
-    <input list="listaAlunos" id="aluno" type="text" placeholder="Digite umnome ou código do aluno" name="aluno">
-    <br /> <br />
-    <p>II. Adicionar produto ao pedido</p>
-    <label for="quantidade">Quantidade:</label>
-    <input type="number" id="quantidade" name="quantidade" min="1" value="1">
-    <br />
-    <label for="produto">Produto:</label>
-    <input list="listaProdutos" type="text" id="produto" placeholder="Digite um nome ou código do produto">
-    <br />
-    <button type="button" onclick="adicionarItem()">
-        <span>+</span>Adicionar
-    </button>
+    <input list="listaAlunos" id="aluno" type="text" placeholder="Digite o nome ou código do aluno" name="aluno">
+    </section>
 
-    <!--Tabela de itens do pedido-->
+    <section class="card pedido-card">
+        <h2>Adicionar produto ao pedido</h2>
+        <div class="pedido-form-grid">
+            <div>
+                <label for="produto">Produto:</label>
+                <input list="listaProdutos" type="text" id="produto" placeholder="Digite o nome ou código do produto">
+            </div>
+            <div>
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" id="quantidade" name="quantidade" min="1" value="1">
+            </div>
+        </div>
+        <button class="btn-primary pedido-add" type="button" onclick="adicionarItem()">
+        <span>+</span>Adicionar
+        </button>
+    </section>
+
+    <section class="pedido-table-wrap">
+    <div class="table-wrap">
     <table>
         <thead>
             <tr>
@@ -45,21 +57,23 @@
                 <th>Quantidade</th>
                 <th>Preço</th>
                 <th>Subtotal</th>
-                <th>Total</th>
                 <th>Ações</th>
             </tr>
         </thead>
         <tbody id="tabelaItens">
-            <!-- Itens serão adicionados aqui -->
              <tr>
-                <td colspan="6"> Nenhum item adicionado ao pedido. </td>
+                <td colspan="5">Nenhum item adicionado ao pedido.</td>
              </tr>
         </tbody>
     </table>
-    <span> Total do Pedido</span>
-    <span> R$ <span id="totalPedido">0,00</span></span>
-    <br /> <br />
-    <button onclick="salvarPedido()">Confirmar e salvar pedido</button> 
+    </div>
+    <div class="pedido-total">
+        <span>Total do pedido</span>
+        <strong>R$ <span id="totalPedido">0,00</span></strong>
+    </div>
+    <button class="btn-primary pedido-save" type="button" onclick="salvarPedido()">Confirmar e salvar pedido</button>
+    </section>
+</div>
     
 <script th:inline="none">
         let itens = [];
@@ -119,7 +133,7 @@
             tabela.innerHTML = "";
  
             if (itens.length === 0) {
-                tabela.innerHTML = `<tr class="empty-row" id="empty-row"><td colspan="6">Nenhum produto adicionado ao pedido.</td></tr>`;
+                tabela.innerHTML = `<tr class="empty-row" id="empty-row"><td colspan="5">Nenhum produto adicionado ao pedido.</td></tr>`;
                 document.getElementById("totalPedido").innerText = "0,00";
                 return;
             }
@@ -134,7 +148,7 @@
 <td>${item.quantidade}</td>
 <td>R$ ${item.preco.toFixed(2).replace('.', ',')}</td>
 <td>R$ ${item.subtotal.toFixed(2).replace('.', ',')}</td>
-<td><button class="btn-remove" onclick="removerItem(${index})">Remover</button></td>
+<td><button class="btn-danger" type="button" onclick="removerItem(${index})">Remover</button></td>
 </tr>
                 `;
             });
@@ -158,16 +172,29 @@
             let alunoId = alunoInput.split(" - ")[0];
  
             let pedido = {
-                cliente: { idAluno: alunoId },
-                itens: itens
+                aluno: { idAluno: Number(alunoId) },
+                itens: itens.map(item => ({
+                    produto: { idProduto: Number(item.produto.idProduto) },
+                    quantidade: item.quantidade
+                }))
             };
+
+            let csrfToken = document.querySelector('meta[name="_csrf"]').content;
  
             fetch("/pedidos", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": csrfToken
+                },
                 body: JSON.stringify(pedido)
             })
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`Falha ao salvar o pedido (${res.status})`);
+                }
+                return res.json();
+            })
             .then(data => {
                 alert("Pedido salvo com sucesso!");
                 location.reload();

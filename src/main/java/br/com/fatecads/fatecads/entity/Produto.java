@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,6 +34,13 @@ public class Produto {
 
     @Column(nullable = false, length = 30)
     private String marcaProduto;
+
+    @Lob
+    @Column
+    private byte[] fotoProduto;
+
+    @Column(length = 100)
+    private String tipoFotoProduto;
 
     @OneToMany(mappedBy = "produto")
     private List<ItemDoPedido> itens;
